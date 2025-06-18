@@ -1,0 +1,6 @@
+*.vscode
+**/*.log
+**/*Book1.twb
+**/*docker-compose.yml
+**/*Dockerfile
+**/*requirements.txt
