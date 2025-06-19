@@ -1,6 +1,5 @@
 {
   "g": "tidak",
-  "cwus": "nan",
   "memangnya": "memang",
   "tolonglah": "tolong",
   "cb": "coba",
@@ -94,6 +93,7 @@
   "proaea": "proses",
   "td": "tadi",
   "tdk": "tidak",
+  "tdak": "tidak",
   "jwb": "jawab",
   "pengalam": "pengalaman",
   "benerin": "benar",
@@ -266,6 +266,7 @@
   "bsk": "besok",
   "lu": "kamu",
   "yaak": "ya",
+  "yaw": "ya",
   "kenkantornya": "ke kantornya",
   "superr": "super",
   "ayok": "ayo",
@@ -1939,6 +1940,7 @@
   "cust": "customer",
   "servis": "service",
   "ga": "tidak",
+  "nga": "tidak",
   "emang": "memang",
   "gmn": "gimana",
   "dr": "dari",
@@ -1951,7 +1953,7 @@
   "yg": "yang",
   "pertimbanhkan": "pertimbangkan",
   "telfon": "telepon",
-  "kagak": "nggak",
+  "kagak": "tidak",
   "internet": "internetnya",
   "brp": "berapa",
   "tlpn": "telepon",
@@ -2283,5 +2285,6 @@
   "aoa": "apa",
   "noll": "nol",
   "dikit": "sedikit",
-  "mntp": "mantap"
+  "mntp": "mantap",
+  "gjls": "gajelas"
 }

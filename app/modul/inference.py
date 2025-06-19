@@ -41,7 +41,7 @@ def sentiment_analysis(req):
     # Fix typo word
     with open("modul/typo_dict.json", "r", encoding="utf-8") as f:
         typo_dict = json.load(f)
-    data['review_text_cleaned'] = data['review_text'].apply(
+    data['review_text_cleaned'] = data['review_text_cleaned'].apply(
         lambda x: ' '.join([typo_dict.get(word.lower(), word) for word in x.split()])
     )
 
