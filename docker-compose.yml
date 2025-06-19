@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  sentiment-analyze-api:
+    build: .
+    container_name: sentiment-analyze-api
+    ports:
+      - "8007:8007"
+    volumes:
+      - ./app:/code
+    restart: always

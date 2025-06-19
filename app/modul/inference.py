@@ -29,21 +29,24 @@ def sentiment_analysis(req):
     data = pd.DataFrame(req.review_text, columns=["review_text"])
     data = data.dropna(subset=['review_text'])  # Drop rows where 'review_text' is missing
     data['review_text_cleaned'] = data['review_text'].astype(str).str.lower()  # Convert to string and lowercase
-    data['review_text_cleaned'] = [re.sub(r'[^\x00-\x7f]',r'', i) for i in data['review_text_cleaned']]  # Remove non-ASCII characters
     data['review_text_cleaned'] = [re.sub(r'\n', r' ', i) for i in data['review_text_cleaned']]  # Replace newline characters with spaces
-    data['review_text_cleaned'] = data['review_text_cleaned'].apply(
-        lambda x: re.sub(f"[{re.escape(string.punctuation)}]", " ", x)  # Remove punctuation
-    )
-    data['review_text_cleaned'] = data['review_text_cleaned'].apply(lambda x: re.sub(r'\d+', '', x))  # Remove numbers
-    data['review_text_cleaned'] = data['review_text_cleaned'].apply(lambda x: re.sub(r'\s+', ' ', x).strip())  # Normalize whitespace
-    data = data[data['review_text_cleaned'] != ""]  # Remove rows where cleaned text is empty
-
     # Fix typo word
     with open("modul/typo_dict.json", "r", encoding="utf-8") as f:
         typo_dict = json.load(f)
     data['review_text_cleaned'] = data['review_text_cleaned'].apply(
-        lambda x: ' '.join([typo_dict.get(word.lower(), word) for word in x.split()])
-    )
+        lambda x: ' '.join([typo_dict.get(word.lower(), word) for word in x.split()]))
+    def normalize_repeated_letters(text):
+        return re.sub(r'(.)\1{2,}', r'\1', text)
+    data['review_text_cleaned'] = data['review_text_cleaned'].apply(normalize_repeated_letters)
+    def remove_double_vowels(text):
+        return re.sub(r'([aeiou])\1+', r'\1', text)
+    data['review_text_cleaned'] = data['review_text_cleaned'].apply(remove_double_vowels)
+    data['review_text_cleaned'] = [re.sub(r'[^\x00-\x7f]',r'', i) for i in data['review_text_cleaned']]  # Remove non-ASCII characters
+    data['review_text_cleaned'] = data['review_text_cleaned'].apply(
+        lambda x: re.sub(f"[{re.escape(string.punctuation)}]", " ", x))  # Remove punctuation
+    data['review_text_cleaned'] = data['review_text_cleaned'].apply(lambda x: re.sub(r'\d+', '', x))  # Remove numbers
+    data['review_text_cleaned'] = data['review_text_cleaned'].apply(lambda x: re.sub(r'\s+', ' ', x).strip())  # Normalize whitespace
+    data = data[data['review_text_cleaned'] != ""]  # Remove rows where cleaned text is empty
 
     data[['sentiment_result_hanifnoerr', 'score_sentiment_result_hanifnoerr']] = data['review_text_cleaned'].apply(
         lambda x: pd.Series(analyze_sentiment_hanifnoerr(x))
